@@ -42,3 +42,4 @@ public:
             return num[low];
     }
 };
+
