@@ -57,9 +57,7 @@ public:
                     else
                     {
                         if (hasN) //先判断是否有负数， 有负数则把第一个负数之前的子序列的乘积除掉
-                        {
                             vec[i].product = vec[i-1].abso * A[i] / vec[ptr].abso;
-                        }
                         else
                         {
                             vec[i].product = A[i];
@@ -81,5 +79,33 @@ public:
         
         return result;
         
+    }
+};
+
+class Solution {
+private:
+    struct Sub
+    {
+        int product;
+        int abso;
+    };
+public:
+    int maxProduct(int A[], int n) {
+       /* 
+        * 保存累乘的最大（正数）和最小值（负数）,这个方面真的很妙，代码简洁, 此方法是对上面方法的优化
+        */
+       int maxTmp = A[0];
+       int minTmp = A[0];
+       int maxP = A[0];
+       int a, b;
+       for (int i = 1; i < n; ++i)
+       {
+           a = maxTmp * A[i];
+           b = minTmp * A[i];
+           maxTmp = max(max(a, b), A[i]);
+           minTmp = min(min(a, b), A[i]);
+           maxP = max(maxP, maxTmp);
+       }
+       return maxP;
     }
 };
